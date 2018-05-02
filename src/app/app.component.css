@@ -36,9 +36,8 @@ table tr:nth-child(even) {
   column-width: 20px;
 }
 
-
 .backdrop{ 
-background-color:rgba(0, 0, 0,0.2);
+background-color:rgba(0, 0, 0,0.9);
 position:fixed;
 top:0;
 left:0;
@@ -47,11 +46,16 @@ height:100vh;
 }
 
 
-h5 {
+h4 {
     font-size: 1.28571429em;
     font-weight: 700;
     line-height: 1.2857em;
     margin: 0;
+}
+.modal-header {
+ 
+ background: #759bd8;
+
 }
 
 .card {
@@ -98,22 +102,6 @@ h5 {
     background: #fff;
 }
 
-.card-inverse .btn {
-    border: 1px solid rgba(0, 0, 0, .05);
-}
-
-.profile {
-    position: absolute;
-    top: -12px;
-    display: inline-block;
-    overflow: hidden;
-    box-sizing: border-box;
-    width: 25px;
-    height: 25px;
-    margin: 0;
-    border: 1px solid #fff;
-    border-radius: 50%;
-}
 
 .text-bold {
     font-weight: 700;

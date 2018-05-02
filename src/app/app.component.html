@@ -6,7 +6,7 @@
 
   <div class="jumbotron">
     <h1> Crypto-Currency Hustler </h1> 
-    <p> Build with Angular.js, this simple application uses external API's (https://coinmarketcap.com/api/) to give latest updates on crypto currency exchange rates, going around the globe.</p> 
+    <p> Build with Angular CLI, this simple application uses external API's (https://coinmarketcap.com/api/) to inject latest updates on crypto currency exchange rates, going around the globe.</p> 
   </div>
 
   
@@ -15,86 +15,99 @@
 		<tr>
 			
 			<th>CRYPTO_CURRENCY_NAME</th>
-			<th>SYMBOL</th>
-			
+			<th>SYMBOL</th>		
 			<th>MARKET_CAP</th>
 			<th>PRICE</th>	
 			<th>CURRENT_RANK</th>
-			<th> READ_MORE</th>
-			
-			
+			<th> READ_MORE</th>		
 					
 		</tr>
 		
 		<tr *ngFor="let crypto of objectKeys(cryptos); let i = index">
-			
 			<td>{{ cryptos[crypto].name }}</td> 
 			<td id="symbol">{{ cryptos[crypto].symbol }}</td> 
 			<td id="price">{{ cryptos[crypto].market_cap_usd | currency:'USD':symbol }}</td>
 			<td id="price">{{ cryptos[crypto].price_usd | currency:'USD':symbol }}</td>
 			<td>{{ cryptos[crypto].rank }}</td>
 			<td>
-				<button type="button" class="btn btn-link" data-toggle="modal" (click)="openModal()"><strong> >>>  </strong></button>	
-				
-				<div class="backdrop" [ngStyle]="{'display':display}"> <br></div>
-				
-				<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
-						
-						 <div class="modal-dialog" role="document">
-
-							<div class="modal-content">
-
-
-								<div class="modal-header">
-									<button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
-									<h3 class="modal-title"> #{{ cryptos[crypto].rank }} : {{ cryptos[crypto].name }} </h3>
-        						</div>
-
-        						<div class="modal-body">
-        							<div class="card">
-                    					
-                    					<div class="card-block">
-                       					 
-                       						
-
-                        					<h4 class="card-title mt-3"> {{ cryptos[crypto].name }}</h4>
-
-	                       					<div class="meta">
-    		                       		        <a>Details:</a>
-            	                            </div>
-
-                                        <div class="card-text">
-                	            			
-                    	        			<p>Name : {{ cryptos[crypto].name }}</p>
-                        	    			<p>Symbol: {{ cryptos[crypto].symbol }}</p>
-                            				<p>Market Capital Used : {{ cryptos[crypto].market_cap_usd | currency:'USD':symbol }}</p>
-                            				<p>Price [USD]: {{ cryptos[crypto].price_usd | currency:'USD':symbol }}</p>
-											<p>Rank : {{ cryptos[crypto].rank }}</p>
-                        	    			<p>:</p>
-                            				<p>:</p>
-                            				<p>:</p>
-                            				<p>:</p>
-                        	    			<p>:</p>
-                            				<p>:</p>
-                            				<p>:</p>
-                        				</div>
-                    					</div>
-                   				    	<div class="card-footer">
-                                    		<small>Last updated ...</small>
-                    					</div>
-               				    	</div>
-        					    </div>
+				<button type="button" class="btn btn-link" data-toggle="modal" (click)="getSpecificCurrency(cryptos[crypto].id)"> <strong> >>> </strong></button>	
 
 
 
-    						</div><!-- /.modal-content -->
+  <div class="backdrop" [ngStyle]="{'display':display}"> </div>
+        
+          <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+            
+             <div class="modal-dialog modal-lg" role="document">
+
+              <div class="modal-content">
 
 
-  						</div><!-- /.modal-dialog -->
+                <div class="modal-header">
+                  <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+                  
+                  <h3 class="modal-title"> {{ cryptos[crypto].name }} </h3>
+                </div>
+
+                <div class="modal-body">
+
+                      <div class="card">
+                              
+                              <div class="card-block">
+                                 
+                                    
 
 
-				</div><!-- /.modal !-->
+                                    <h4 class="card-title">Current Global Standing #{{ cryptos[crypto].rank }}</h4>
 
+                                    <div class="meta"><a>Detail Card:</a></div>
+                                    <br>
+                                    
+                                    
+
+
+
+                                    <div class="row">
+                                    <div class="col-lg-5"><div class="card-text">
+                                    <p>Name : {{ cryptos[crypto].name }}</p>
+                                    <p>Symbol: {{ cryptos[crypto].symbol }}</p>
+                                    <p>Market Capital Used : {{ cryptos[crypto].market_cap_usd | currency:'USD':symbol }}</p>
+                                    <p>Price [USD]: {{ cryptos[crypto].price_usd | currency:'USD':symbol }}</p>
+                                    <p>Rank : {{ cryptos[crypto].rank }}</p>
+                                    <p>Website Slug : {{ cryptos[crypto].website_slug }}</p>
+                                    <p>Circulating Supply : {{ cryptos[crypto].circulating_supply }}</p>
+                                    <p>Total Supply : {{ cryptos[crypto].total_supply }}</p>
+                                    <p>Max Supply : {{ cryptos[crypto].max_supply }}</p>
+                                    </div></div>
+                                    <div class="col-lg-7"><div *ngIf= "chart">
+                                    <p> Graphical representation of percentage changes in last 7d</p>
+                                    <canvas id="canvas">{{ chart }}</canvas>
+                                    </div></div>
+                                    </div>
+
+  
+                              </div>
+
+
+                              <div class="card-footer">
+                                <small>Last updated ...{{ cryptos[crypto].last_updated*1000 |  date:"MM/dd/yyyy 'at' h:mma" }}</small>
+                              </div>
+
+
+                      </div>
+                </div>
+                    
+
+
+                </div><!-- /.modal-content -->
+
+
+              </div><!-- /.modal-dialog -->
+
+
+        </div><!-- /.modal !-->
+					
+			
 			</td>
 		</tr>
 	</table>
@@ -102,7 +115,7 @@
   <br>
   <br>
 
-  <footer class="container-fluid text-center">
+  <footer class="container text-center">
   		<p> Designed by :: Ronnie@github/ronnielivingsince1994  </p>
   		<p> copyrights@2018 </p>
   </footer> 
